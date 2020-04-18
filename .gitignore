@@ -1,5 +1,8 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
+# distributed files
+/dist
+
 # dependencies
 /node_modules
 
@@ -18,3 +21,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea/
+
+

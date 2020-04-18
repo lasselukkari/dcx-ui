@@ -8,6 +8,9 @@
   ],
   "repository": "github:lasselukkari/dcx-ui",
   "license": "MIT",
+  "files":[
+    "dist/"
+  ],
   "devDependencies": {
     "bootswatch": "4.4.1",
     "compare-versions": "3.6.0",
@@ -42,7 +45,7 @@
   "dependencies": {},
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && mv build dist",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "xo",
