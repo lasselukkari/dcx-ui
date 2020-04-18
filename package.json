@@ -8,7 +8,7 @@
   ],
   "repository": "github:lasselukkari/dcx-ui",
   "license": "MIT",
-  "files":[
+  "files": [
     "dist/"
   ],
   "devDependencies": {
