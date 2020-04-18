@@ -8,21 +8,20 @@
   ],
   "repository": "github:lasselukkari/dcx-ui",
   "license": "MIT",
+  "files": [
+    "dist/"
+  ],
   "devDependencies": {
+    "bootswatch": "4.4.1",
+    "compare-versions": "3.6.0",
     "eslint-config-xo-react": "0.23.0",
     "eslint-import-resolver-webpack": "0.12.1",
     "eslint-plugin-babel": "5.3.0",
     "eslint-plugin-react": "7.19.0",
-    "prettier": "2.0.4",
-    "react-scripts": "3.4.1",
-    "xo": "0.29.1"
-  },
-  "dependencies": {
-    "bootswatch": "4.4.1",
-    "compare-versions": "3.6.0",
     "lodash.clonedeep": "4.5.0",
     "lodash.isequal": "4.5.0",
     "mathjs": "6.6.4",
+    "prettier": "2.0.4",
     "prop-types": "15.7.2",
     "rc-slider": "9.2.4",
     "rc-tooltip": "4.0.3",
@@ -35,15 +34,18 @@
     "react-dropzone": "10.2.2",
     "react-icons": "3.9.0",
     "react-numeric-input": "2.2.3",
+    "react-scripts": "3.4.1",
     "react-spinkit": "3.0.0",
     "react-toastify": "5.5.0",
     "react-window-size": "1.2.2",
     "recharts": "1.8.5",
-    "superagent": "5.2.2"
+    "superagent": "5.2.2",
+    "xo": "0.29.1"
   },
+  "dependencies": {},
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && mv build dist",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "xo",
