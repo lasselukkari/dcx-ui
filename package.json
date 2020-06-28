@@ -39,7 +39,7 @@
     "react-toastify": "6.0.6",
     "react-window-size": "1.2.2",
     "recharts": "1.8.5",
-    "superagent": "5.3.0",
+    "superagent": "5.3.1",
     "xo": "0.32.0"
   },
   "dependencies": {},
