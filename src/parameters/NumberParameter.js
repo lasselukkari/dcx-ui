@@ -79,7 +79,6 @@ class NumberParameter extends Component {
     const {manualValue: value} = this.state;
 
     onChange({param, group, channelId, eq, value});
-    this.overlay.hide();
   };
 
   async confirmChange(newValue) {
@@ -152,20 +151,6 @@ class NumberParameter extends Component {
   };
 
   handlePressRelease = () => clearTimeout(this.pressTimer);
-
-  createRef = (overlay) => {
-    if (!overlay) {
-      return;
-    }
-
-    const {handleHide} = overlay;
-    overlay.handleHide = () => {
-      this.setState(({value: manualValue}) => ({manualValue}));
-      handleHide();
-    };
-
-    this.overlay = overlay;
-  };
 
   render() {
     const {
@@ -255,7 +240,6 @@ class NumberParameter extends Component {
               />
             </div>
             <OverlayTrigger
-              ref={this.createRef}
               overlay={popover}
               placement="top" // eslint-disable-line react/jsx-sort-props
               rootClose
