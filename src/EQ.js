@@ -44,10 +44,7 @@ class EQ extends PureComponent {
           Dialog.CancelAction(() => reject()), // eslint-disable-line new-cap
           Dialog.OKAction(() => resolve()) // eslint-disable-line new-cap
         ],
-        onHide: (dialog) => {
-          dialog.hide();
-          reject();
-        }
+        onHide: () => {}
       });
     });
   };
