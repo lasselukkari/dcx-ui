@@ -142,16 +142,6 @@ class NumberParameter extends Component {
     }
   };
 
-  handleReductionPress = () => {
-    this.pressTimer = setInterval(() => this.handleReduction(), 150);
-  };
-
-  handleAdditionPress = () => {
-    this.pressTimer = setInterval(() => this.handleAddition(), 150);
-  };
-
-  handlePressRelease = () => clearTimeout(this.pressTimer);
-
   render() {
     const {
       name,
@@ -213,14 +203,7 @@ class NumberParameter extends Component {
 
         <div className="number-param-container">
           <div className="min-number">
-            <Button
-              onTouchStart={this.handleReductionPress}
-              onTouchEnd={this.handlePressRelease}
-              onMouseDown={this.handleReductionPress}
-              onMouseUp={this.handlePressRelease}
-              onMouseLeave={this.handlePressRelease}
-              onClick={this.handleReduction}
-            >
+            <Button onClick={this.handleReduction}>
               <FaMinus />
             </Button>
           </div>
@@ -251,14 +234,7 @@ class NumberParameter extends Component {
             </OverlayTrigger>
           </div>
           <div className="max-number">
-            <Button
-              onTouchStart={this.handleAdditionPress}
-              onTouchEnd={this.handlePressRelease}
-              onMouseDown={this.handleAdditionPress}
-              onMouseUp={this.handlePressRelease}
-              onMouseLeave={this.handlePressRelease}
-              onClick={this.handleAddition}
-            >
+            <Button onClick={this.handleAddition}>
               <FaPlus />
             </Button>
           </div>
