@@ -36,7 +36,7 @@ class Upload extends PureComponent {
 
   async fetchReleases() {
     try {
-      const response = fetch(
+      const response = await fetch(
         'https://api.github.com/repos/lasselukkari/DuinoDCX/releases'
       );
       if (!response.ok) {
