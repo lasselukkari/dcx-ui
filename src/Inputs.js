@@ -40,6 +40,7 @@ class Inputs extends Component {
           variant="pills"
           id="inputs"
           className="control-menu"
+          unmountOnExit
         >
           <Tab title="Gain" variant="primary" eventKey="gain">
             <Card>

@@ -42,6 +42,7 @@ class Outputs extends Component {
           variant="pills"
           id="outputs"
           className="control-menu"
+          unmountOnExit
         >
           <Tab title="Gain" variant="primary" eventKey="gain">
             <Card>
