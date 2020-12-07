@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import FormGroup from 'react-bootstrap/FormGroup';
 import FormLabel from 'react-bootstrap/FormLabel';
 import Button from 'react-bootstrap/Button';
+import Dialog from 'react-bootstrap-dialog';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -29,7 +30,6 @@ class NumberParameter extends Component {
       `${Math.round(value * 10) / 10} ${unit ? unit : ''}`,
     labelFormatter: (value) => value.toString(),
     hasLabel: false,
-    confirm: () => Promise.resolve(),
     group: null,
     eq: null,
     channelId: null
@@ -48,7 +48,6 @@ class NumberParameter extends Component {
     onChange: PropTypes.func.isRequired,
     eq: PropTypes.string,
     name: PropTypes.string.isRequired,
-    confirm: PropTypes.func,
     hasLabel: PropTypes.bool,
     labelFormatter: PropTypes.func
   };
@@ -81,6 +80,36 @@ class NumberParameter extends Component {
     onChange({param, group, channelId, eq, value});
   };
 
+  showConfirmChange = ({oldValue, newValue, name, unit, formatter}) => {
+    return new Promise((resolve, reject) => {
+      if (newValue <= oldValue) {
+        return resolve();
+      }
+
+      this.dialog.show({
+        title: 'Confirm change',
+        body: (
+          <div style={{textAlign: 'center'}}>
+            <p>
+              You are about to change {name.toLowerCase()} from{' '}
+              {formatter(oldValue, unit)} to {formatter(newValue, unit)}.
+            </p>
+            <p>
+              This is {formatter(newValue - oldValue, unit)} increase. Are you
+              sure?
+            </p>
+          </div>
+        ),
+        bsSize: 'md',
+        actions: [
+          Dialog.CancelAction(() => reject()), // eslint-disable-line new-cap
+          Dialog.OKAction(() => resolve()) // eslint-disable-line new-cap
+        ],
+        onHide: () => {}
+      });
+    });
+  };
+
   async confirmChange(newValue) {
     const {
       name,
@@ -90,7 +119,6 @@ class NumberParameter extends Component {
       channelId,
       eq,
       onChange,
-      confirm,
       value: oldValue,
       formatter
     } = this.props;
@@ -100,7 +128,7 @@ class NumberParameter extends Component {
     }
 
     try {
-      await confirm({oldValue, newValue, unit, name, formatter});
+      await this.showConfirmChange({oldValue, newValue, unit, name, formatter});
       this.setState({moving: false, manualValue: newValue});
       onChange({param, group, channelId, eq, value: newValue});
     } catch {
@@ -239,6 +267,11 @@ class NumberParameter extends Component {
             </Button>
           </div>
         </div>
+        <Dialog
+          ref={(element) => {
+            this.dialog = element;
+          }}
+        />
       </FormGroup>
     );
   }

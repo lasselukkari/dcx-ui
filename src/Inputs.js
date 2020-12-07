@@ -36,11 +36,11 @@ class Inputs extends Component {
     return (
       <div>
         <Tabs
+          unmountOnExit
           defaultActiveKey="gain"
           variant="pills"
           id="inputs"
           className="control-menu"
-          unmountOnExit
         >
           <Tab title="Gain" variant="primary" eventKey="gain">
             <Card>

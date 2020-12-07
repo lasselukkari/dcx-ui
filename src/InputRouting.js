@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
-import Dialog from 'react-bootstrap-dialog';
 import PropTypes from 'prop-types';
 import Row from 'react-bootstrap/Row';
 import isEqual from 'lodash.isequal';
@@ -25,36 +24,6 @@ class InputRouting extends Component {
     const {setup} = this.props;
     return !isEqual(setup, nextProps.setup);
   }
-
-  confirmChange = ({oldValue, newValue, name, unit, formatter}) => {
-    return new Promise((resolve, reject) => {
-      if (newValue - oldValue <= 6) {
-        return resolve();
-      }
-
-      this.dialog.show({
-        title: 'Confirm change',
-        body: (
-          <div style={{textAlign: 'center'}}>
-            <p>
-              You are about to change {name.toLowerCase()} from{' '}
-              {formatter(oldValue, unit)} to {formatter(newValue, unit)}.
-            </p>
-            <p>
-              This is {formatter(newValue - oldValue, unit)} increase. Are you
-              sure?
-            </p>
-          </div>
-        ),
-        bsSize: 'md',
-        actions: [
-          Dialog.CancelAction(() => reject()), // eslint-disable-line new-cap
-          Dialog.OKAction(() => resolve()) // eslint-disable-line new-cap
-        ],
-        onHide: () => {}
-      });
-    });
-  };
 
   render() {
     const {setup, onChange} = this.props;
@@ -109,28 +78,20 @@ class InputRouting extends Component {
             <pc.InputASumGain
               hasLabel
               value={inputASumGain}
-              confirm={this.confirmChange}
               onChange={onChange}
             />
             <pc.InputBSumGain
               hasLabel
               value={inputBSumGain}
-              confirm={this.confirmChange}
               onChange={onChange}
             />
             <pc.InputCSumGain
               hasLabel
               value={inputCSumGain}
-              confirm={this.confirmChange}
               onChange={onChange}
             />
           </Card.Body>
         </Card>
-        <Dialog
-          ref={(element) => {
-            this.dialog = element;
-          }}
-        />
       </div>
     );
   }
