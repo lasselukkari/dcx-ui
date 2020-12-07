@@ -1,7 +1,7 @@
 {
   "name": "dcx-ui",
   "description": "HTML user interface for the Behringer Ultradrive Pro (DCX2496)",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "author": "Lasse Lukkari <lasse.lukkari@gmai.com>",
   "contributors": [
     "Ilkka Huhtakallio"
