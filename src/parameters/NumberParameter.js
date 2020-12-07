@@ -3,12 +3,9 @@ import PropTypes from 'prop-types';
 import FormGroup from 'react-bootstrap/FormGroup';
 import FormLabel from 'react-bootstrap/FormLabel';
 import Button from 'react-bootstrap/Button';
-import Popover from 'react-bootstrap/Popover';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import InputGroup from 'react-bootstrap/InputGroup';
+import Dialog from 'react-bootstrap-dialog';
 import Slider, {createSliderWithTooltip} from 'rc-slider';
 import {FaPlus, FaMinus} from 'react-icons/fa';
-import NumericInput from 'react-numeric-input';
 
 import './NumberParameter.css';
 import 'rc-slider/assets/index.css';
@@ -29,7 +26,6 @@ class NumberParameter extends Component {
       `${Math.round(value * 10) / 10} ${unit ? unit : ''}`,
     labelFormatter: (value) => value.toString(),
     hasLabel: false,
-    confirm: () => Promise.resolve(),
     group: null,
     eq: null,
     channelId: null
@@ -48,14 +44,12 @@ class NumberParameter extends Component {
     onChange: PropTypes.func.isRequired,
     eq: PropTypes.string,
     name: PropTypes.string.isRequired,
-    confirm: PropTypes.func,
     hasLabel: PropTypes.bool,
     labelFormatter: PropTypes.func
   };
 
   state = {
-    value: this.props.value,
-    manualValue: this.props.value
+    value: this.props.value
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -72,13 +66,34 @@ class NumberParameter extends Component {
 
   handleOnChange = (value) => this.setState({value});
 
-  handleManualChange = (manualValue) => this.setState({manualValue});
+  showConfirmChange = ({oldValue, newValue, name, unit, formatter}) => {
+    return new Promise((resolve, reject) => {
+      if (newValue <= oldValue) {
+        return resolve();
+      }
 
-  handleManualSet = () => {
-    const {param, group, channelId, eq, onChange} = this.props;
-    const {manualValue: value} = this.state;
-
-    onChange({param, group, channelId, eq, value});
+      this.dialog.show({
+        title: 'Confirm change',
+        body: (
+          <div style={{textAlign: 'center'}}>
+            <p>
+              You are about to change {name.toLowerCase()} from{' '}
+              {formatter(oldValue, unit)} to {formatter(newValue, unit)}.
+            </p>
+            <p>
+              This is {formatter(newValue - oldValue, unit)} increase. Are you
+              sure?
+            </p>
+          </div>
+        ),
+        bsSize: 'md',
+        actions: [
+          Dialog.CancelAction(() => reject()), // eslint-disable-line new-cap
+          Dialog.OKAction(() => resolve()) // eslint-disable-line new-cap
+        ],
+        onHide: () => {}
+      });
+    });
   };
 
   async confirmChange(newValue) {
@@ -90,7 +105,6 @@ class NumberParameter extends Component {
       channelId,
       eq,
       onChange,
-      confirm,
       value: oldValue,
       formatter
     } = this.props;
@@ -100,8 +114,7 @@ class NumberParameter extends Component {
     }
 
     try {
-      await confirm({oldValue, newValue, unit, name, formatter});
-      this.setState({moving: false, manualValue: newValue});
+      await this.showConfirmChange({oldValue, newValue, unit, name, formatter});
       onChange({param, group, channelId, eq, value: newValue});
     } catch {
       this.setState({moving: false, value: oldValue});
@@ -172,26 +185,6 @@ class NumberParameter extends Component {
       marginTop: -15
     };
 
-    const popover = (
-      <Popover id="popover-positioned-right">
-        <FormGroup style={{margin: '10px 5px'}}>
-          <InputGroup>
-            <NumericInput
-              snap
-              min={min}
-              max={max}
-              step={step}
-              value={this.state.value}
-              precision={2}
-              onChange={this.handleManualChange}
-            />
-
-            <Button onClick={this.handleManualSet}>Set</Button>
-          </InputGroup>
-        </FormGroup>
-      </Popover>
-    );
-
     return (
       <FormGroup>
         {hasLabel !== false && (
@@ -222,16 +215,7 @@ class NumberParameter extends Component {
                 onAfterChange={this.handleOnAfterChange}
               />
             </div>
-            <OverlayTrigger
-              overlay={popover}
-              placement="top" // eslint-disable-line react/jsx-sort-props
-              rootClose
-              trigger="click"
-            >
-              <button type="button" className="value-button">
-                {formatter(value, unit)}
-              </button>
-            </OverlayTrigger>
+            <div className="current-value">{formatter(value, unit)}</div>
           </div>
           <div className="max-number">
             <Button onClick={this.handleAddition}>
@@ -239,6 +223,11 @@ class NumberParameter extends Component {
             </Button>
           </div>
         </div>
+        <Dialog
+          ref={(element) => {
+            this.dialog = element;
+          }}
+        />
       </FormGroup>
     );
   }
