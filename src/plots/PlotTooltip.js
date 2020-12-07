@@ -18,27 +18,29 @@ class DefaultTooltipContent extends PureComponent {
     const {payload, filter} = this.props;
 
     if (payload && payload.length > 0) {
-      const items = payload.filter(filter).map((entry) => {
-        return (
-          <li
-            key={`tooltip-item-${entry.dataKey}`}
-            className="recharts-tooltip-item"
-            style={{
-              display: 'block',
-              paddingTop: 4,
-              paddingBottom: 4,
-              color: entry.color || '#000'
-            }}
-          >
-            <span className="recharts-tooltip-item-name">{entry.name}</span>
-            <span className="recharts-tooltip-item-separator">: </span>
-            <span className="recharts-tooltip-item-value">
-              {entry.value.toFixed(2)}
-            </span>
-            <span className="recharts-tooltip-item-unit"> {entry.unit}</span>
-          </li>
-        );
-      });
+      const items = payload
+        .filter((entry) => filter(entry))
+        .map((entry) => {
+          return (
+            <li
+              key={`tooltip-item-${entry.dataKey}`}
+              className="recharts-tooltip-item"
+              style={{
+                display: 'block',
+                paddingTop: 4,
+                paddingBottom: 4,
+                color: entry.color || '#000'
+              }}
+            >
+              <span className="recharts-tooltip-item-name">{entry.name}</span>
+              <span className="recharts-tooltip-item-separator">: </span>
+              <span className="recharts-tooltip-item-value">
+                {entry.value.toFixed(2)}
+              </span>
+              <span className="recharts-tooltip-item-unit"> {entry.unit}</span>
+            </li>
+          );
+        });
 
       return (
         <ul

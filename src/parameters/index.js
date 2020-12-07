@@ -117,8 +117,7 @@ const numberComponent = function ({name, unit, min, max, step}, type) {
       hasLabel: false,
       eq: null,
       group: null,
-      channelId: null,
-      confirm: () => Promise.resolve()
+      channelId: null
     };
 
     static propTypes = {
@@ -128,7 +127,6 @@ const numberComponent = function ({name, unit, min, max, step}, type) {
       channelId: PropTypes.string,
       onChange: PropTypes.func.isRequired,
       eq: PropTypes.string,
-      confirm: PropTypes.func,
       hasLabel: PropTypes.bool,
       labelFormatter: PropTypes.func
     };
@@ -142,7 +140,6 @@ const numberComponent = function ({name, unit, min, max, step}, type) {
         onChange,
         formatter,
         hasLabel,
-        confirm,
         labelFormatter
       } = this.props;
       return (
@@ -160,7 +157,6 @@ const numberComponent = function ({name, unit, min, max, step}, type) {
           eq={eq}
           hasLabel={hasLabel}
           formatter={formatter}
-          confirm={confirm}
           labelFormatter={labelFormatter}
           onChange={onChange}
         />
@@ -203,7 +199,7 @@ Parser.commands.outputCommands.forEach((command) => {
   components[squeeze(command.name)] = createComponent(command);
 });
 
-export default {
+const parameters = {
   // Setup components
   InputSumType: components.InputSumType,
   InputABSource: components.InputABSource,
@@ -262,3 +258,5 @@ export default {
   ShortDelay: components.ShortDelay,
   commandTypes
 };
+
+export default parameters;
