@@ -4,28 +4,15 @@ import PropTypes from 'prop-types';
 
 class ChannelLevel extends PureComponent {
   static propTypes = {
-    channelId: PropTypes.string.isRequired,
-    isMuted: PropTypes.bool.isRequired,
     isOutput: PropTypes.bool.isRequired,
     isLimited: PropTypes.bool.isRequired,
-    level: PropTypes.number.isRequired,
-    onChange: PropTypes.func.isRequired
-  };
-
-  handleClick = () => {
-    const {channelId, isMuted, isOutput, onChange} = this.props;
-    onChange({
-      param: 'mute',
-      group: isOutput ? 'outputs' : 'inputs',
-      channelId,
-      value: !isMuted
-    });
+    level: PropTypes.number.isRequired
   };
 
   render() {
     const {isLimited, level, isOutput} = this.props;
 
-    if (isLimited === undefined || level === undefined) {
+    if (level === -1) {
       return null;
     }
 
