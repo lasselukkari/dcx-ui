@@ -6,7 +6,7 @@ import ChannelControls from './ChannelControls';
 
 import './ChannelLevels.css';
 
-const inputChannels = ['A', 'B', 'C'];
+const inputChannels = ['A', 'B', 'C', 'Sum'];
 const outputChannels = ['1', '2', '3', '4', '5', '6'];
 
 class ChannelLevels extends PureComponent {
@@ -118,7 +118,10 @@ class ChannelLevels extends PureComponent {
       <div className="channels-container">
         <div className="channel-group">
           {inputChannels.map((channelId, index) => {
-            const {isLimited, level} = inputs[index];
+            const {isLimited, level} = inputs[index] || {
+              isLimited: false,
+              level: -1
+            };
             const {mute} = device.inputs[channelId];
             const {group, name, isSelected} = this.state.selected.inputs[index];
 
