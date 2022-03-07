@@ -12,7 +12,7 @@
     "dist/"
   ],
   "devDependencies": {
-    "bootswatch": "4.5.0",
+    "bootswatch": "4.6.1",
     "compare-versions": "3.6.0",
     "eslint-config-xo-react": "0.23.0",
     "eslint-import-resolver-webpack": "0.12.2",
