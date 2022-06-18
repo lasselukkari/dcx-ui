@@ -21,7 +21,7 @@
     "lodash.clonedeep": "4.5.0",
     "lodash.isequal": "4.5.0",
     "mathjs": "7.1.0",
-    "prettier": "2.0.5",
+    "prettier": "2.7.1",
     "prop-types": "15.7.2",
     "rc-slider": "9.3.1",
     "rc-tooltip": "4.2.1",
