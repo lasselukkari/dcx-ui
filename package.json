@@ -17,7 +17,7 @@
     "eslint-config-xo-react": "0.23.0",
     "eslint-import-resolver-webpack": "0.12.2",
     "eslint-plugin-babel": "5.3.1",
-    "eslint-plugin-react": "7.20.3",
+    "eslint-plugin-react": "7.30.1",
     "lodash.clonedeep": "4.5.0",
     "lodash.isequal": "4.5.0",
     "mathjs": "7.1.0",
